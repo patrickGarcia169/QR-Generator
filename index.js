@@ -52,13 +52,3 @@ window.addEventListener("DOMContentLoaded", function() {
         e.preventDefault();
     })
 }, false)
-
-/*POSSIBLE ISSUE: the elements called in by the functions aren't considered rendered in DOM
-which means the JS loads before it can even though it is on the screen. 
-document.addEventListener("DOMContentLoaded", (e) => {}) does not help or work. Because I made
-the DOM reliant on the calling of JS functions, the JS is called then the DOM is rendered 
-causing the issue. It works with the button clicking, but not with the other elements*/ 
-
-/*POSSIBLE SOLUTION: the only element in this JS code that is tangible is "main" because
-body is written into the HTML file. Both function elements are like ghosts: they have an
-appearance but are not tangible. I need to find a way to make the function elements tangible*/
