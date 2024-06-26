@@ -30,13 +30,12 @@ button{
     color: white;
 }
 
-
 /*****GENERATOR SCREEN*****/
 /*Container*/
-#qr-screen{
+#qr-screen, #qr-div{
     background-color: lightskyblue;
 }
-#qr-screen button{
+#qr-screen button, #qr-return{
     background-color: blue;
     color: white;
 }
@@ -51,4 +50,9 @@ button{
 }
 #url-input:focus::placeholder{
     opacity: 0;
+}
+
+/*****QR Code SCREEN*****/
+#qr-txt{
+    font-size: 25px;
 }

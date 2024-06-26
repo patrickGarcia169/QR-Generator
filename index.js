@@ -1,54 +1,101 @@
+
 // Container Variable
 let main = document.getElementById("main");
 
-// Start Screen HTML
-let startScreen = 
-'<div id="start-screen">\
-    <h1 id="start-header">Do you want to make a free QR code?</h1>\
-    <button type="button" id="start-button" onClick="displayGenerator()">Yes</button>\
-</div>';
+// Creation Function
+function makeElement(element, idName, text){
+    let obj = document.createElement(element);
+    if(idName != ""){
+        obj.setAttribute("id", idName);
+    }
+    if(text != ""){
+        let txtNode = document.createTextNode(text);
+        obj.appendChild(txtNode);
+    }
 
-// DEBUG
-let header = document.getElementById("start-header");
-console.log(header + ": Function 1 Element");
+    return obj;
+}
 
-// Display Start Screen
+// Start Screen
 function displayStart(){
-    main.innerHTML = startScreen;
+
+    // Clean Slate
+    main.innerHTML = "";
+    
+    // Element Creation
+    let h1 = makeElement("h1", "start-header", "Do you want to make a free QR code?");
+    let button = makeElement("button", "start-button", "Yes");
+    let div = makeElement("div", "start-screen", "");
+
+    // Element Attributes
+    button.setAttribute("onClick", "displayGenerator()");
+
+    // Appending
+    div.appendChild(h1);
+    div.appendChild(button);
+    main.appendChild(div);
 }
-displayStart();
 
-// QR Generator Screen
-let generatorScreen = 
-'<div id="qr-screen">\
-    <h1 id="qr-header">This is the QR Generator</h1>\
-    <h2 id="qr-header">Enter a URL to get a free QR code</h2>\
-    <form id="input-form">\
-        <label for="url-input">URL:  </label>\
-        <input type="url" id="url-input" placeholder="Enter URL" required></input>\
-        <br>\
-        <button type="submit" id="qr-submit">Submit</button>\
-    </form>\
-    <button type="button" id="qr-return" onClick="displayStart()">Go Back</button>\
-</div>';
-
-// Display QR Generator Screen
+// Generator Screen
 function displayGenerator(){
-    main.innerHTML = generatorScreen;
-}
 
-/********************************************** */
+    // Clean Slate
+    main.innerHTML = "";
 
-window.addEventListener("DOMContentLoaded", function() {
+    // Element Creation
+    let label = makeElement("label", "", "URL: ");    
+    let input = makeElement("input", "url-input", "");    
+    let button = makeElement("button", "qr-submit", "Submit");    
+    let form = makeElement("form", "input-form", "");    
+    let h1 = makeElement("h1", "qr-header", "This is the QR Generator");    
+    let h2 = makeElement("h2", "", "Enter a URL to get a free QR code");    
+    let button2 = makeElement("button", "qr-return", "Go Back");    
+    let div = makeElement("div", "qr-screen", "");
+
+    // Element Attributes
+    form.setAttribute("onSubmit", "createQR(); return false;") // Delete for any text
+    label.setAttribute("for", "url-input")
+    input.setAttribute("type", "url");
+    input.setAttribute("placeholder", "Enter URL");
+    input.setAttribute("required", "");
+    button.setAttribute("type", "submit");
+    button2.setAttribute("type", "button");
+    button2.setAttribute("onClick", "displayStart()");
+
+    // Appending
+    form.appendChild(label);
+    form.appendChild(input);
+    form.appendChild(button);
+    div.appendChild(h1);
+    div.appendChild(h2);
+    div.appendChild(form);
+    div.appendChild(button2);
+    main.appendChild(div);
+};
+
+// URL Sumbission
+function createQR(){
+
+    // Remove Submit Button
+    let button = document.getElementById("qr-submit");
+    button.remove();
 
     // Variables
-    let codeForm = document.getElementById("input-form");
+    let web = document.getElementById("url-input").value;
 
-    // DEBUG
-    let button = document.getElementById("qr-submit");
-    console.log(button + ": Function 2 Element");
+    // Element Creation
+    let div = makeElement("div", "qr-div", "");
+    let txt = makeElement("h2", "qr-txt", "Website: " + web);
+    let image = makeElement("p", "qr-img", "");
 
-    button.addEventListener("click", (e) => {
-        e.preventDefault();
-    })
-}, false)
+    // Appending
+    div.appendChild(txt);
+    div.appendChild(image);
+    main.appendChild(div);
+
+    let qrcode = new QRCode("qr-img", web);
+    
+}
+
+// Main
+displayStart();
